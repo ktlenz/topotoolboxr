@@ -4,7 +4,8 @@ Title: R Interface to TopoToolbox
 Authors@R: c(person("Domenic", "Bartha", role = c("cre","aut"),
                      email = "bartha1@uni-potsdam.de"))
 Maintainer: Domenic Bartha <bartha1@uni-potsdam.de>
-Depends: R (>= 4.1.0)
+Depends: R (>= 4.1.0),
+	 terra
 License: GPL-3 + file LICENSE
 Description: Topotoolboxr provides an R interface to TopoToolbox, a set of tools for digital terrain analysis and landscape evolution modeling.
 Encoding: UTF-8
