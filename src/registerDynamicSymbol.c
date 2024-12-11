@@ -7,6 +7,7 @@
 
 static const R_CMethodDef cMethods[] = {
    {"wrap_has_topotoolbox", (DL_FUNC) &wrap_has_topotoolbox, 1},
+   {"wrap_gradient8",(DL_FUNC) &wrap_gradient8,5},
    {NULL,NULL,0,NULL},
 };
 
