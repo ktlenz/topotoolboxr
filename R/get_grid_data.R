@@ -11,7 +11,7 @@ get_grid_data <- function(r) {
     
     if(terra::nlyr(r) != 1)
         stop("error: Spatrast has more than one layer");
-    if(terra::xres(r) != terra::yres(r))
+    if(!all.equal(terra::xres(r), terra::yres(r)))
         stop("error: Spatrast's y and x resolutions are not equal");
     if(terra::is.lonlat(r))
         stop("error: the coordinate system is not projected");
