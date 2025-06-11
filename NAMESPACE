@@ -3,5 +3,6 @@
 export(fillsinks)
 export(gradient8)
 export(has_topotoolbox)
+export(identifyflats)
 import(terra)
 useDynLib(topotoolboxr, .registration = TRUE, .fixes = "C_")
