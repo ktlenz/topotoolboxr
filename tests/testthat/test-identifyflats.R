@@ -1,0 +1,10 @@
+test_that("identifyflats loads the elev.tif from terra and produces our desired list of z, cellsize and dims values", {
+  load_rast<-terra::rast(system.file("ex/elev.tif",package="terra"))
+  load_rast<-terra::project(load_rast,"epsg:32632",res=90.0)
+  expect_no_message(identifyflats(load_rast))
+  expect_no_error(identifyflats(load_rast))
+  expect_visible(identifyflats(load_rast))
+  flats <- identifyflats(load_rast)
+  expect_true(all(unique(values(flats)) %in% c(0,1,2,5)))
+  expect_equal(sum(values(flats) == 1), 670)
+})
