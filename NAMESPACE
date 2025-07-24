@@ -2,6 +2,7 @@
 
 export(fillsinks)
 export(gradient8)
+export(gwdt)
 export(gwdt_computecosts)
 export(has_topotoolbox)
 export(identifyflats)

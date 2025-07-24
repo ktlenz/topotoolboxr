@@ -9,4 +9,6 @@ void wrap_fillsink(float *output, float *dem, int *bcR, int *dimsR);
 
 void wrap_gwdt_computecosts(float *costsR, int *flatsR, float *original_demR, float *filled_demR, int *dimsR);
 
+void wrap_gwdt(float *distR, float *costsR, int *flatsR, int *dimsR);
+
 #endif // TOPOTOOLBOXR_H
