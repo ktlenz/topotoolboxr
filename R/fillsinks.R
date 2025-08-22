@@ -1,12 +1,27 @@
-#' Sink filling
+#' fillsinks
 #'
-#' Fill sinks in the digital elevation model (DEM).
+#'@description Fill sinks in the digital elevation model (DEM).
 #' 
-#' @param DEM SpatRaster (terra); Digital elevation model 
-#' @param bc numeric array or matrix; Boundary conditions for sink filling. `bc` should match the shape of the DEM. Values of 1 indicate pixels that should be fixed to their values in the original DEM and values of 0 indicate pixels that should be filled.
-#' @param hybrid logical; Should hybrid reconstruction algorithm be used? Defaults to True. Hybrid reconstruction is faster but requires additional memory be allocated for a queue.
-#'
-#' @return SpatRaster (terra); The filled DEM
+#' @param DEM GRIDobj
+#' 
+#' Digital elevation model 
+#' 
+#' @param bc numeric array or matrix, optional
+#' 
+#' Boundary conditions for sink filling. `bc` should match the shape of the DEM.
+#' Values of 1 indicate pixels that should be fixed to their values in the
+#' original DEM and values of 0 indicate pixels that should be filled.
+#' 
+#' @param hybrid logical, optional
+#' 
+#' Should hybrid reconstruction algorithm be used to fill sinks? Defaults to
+#' True. Hybrid reconstruction is faster but requires additional memory be
+#' allocated for a queue.
+#' 
+#' @return GRIDobj
+#' 
+#' The filled DEM
+#' 
 #' @export
 
 fillsinks <- function(DEM,

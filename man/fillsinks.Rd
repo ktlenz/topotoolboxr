@@ -2,19 +2,31 @@
 % Please edit documentation in R/fillsinks.R
 \name{fillsinks}
 \alias{fillsinks}
-\title{Sink filling}
+\title{fillsinks}
 \usage{
 fillsinks(DEM, bc = NULL, hybrid = TRUE)
 }
 \arguments{
-\item{DEM}{SpatRaster (terra); Digital elevation model}
+\item{DEM}{GRIDobj
 
-\item{bc}{numeric array or matrix; Boundary conditions for sink filling. `bc` should match the shape of the DEM. Values of 1 indicate pixels that should be fixed to their values in the original DEM and values of 0 indicate pixels that should be filled.}
+Digital elevation model}
 
-\item{hybrid}{logical; Should hybrid reconstruction algorithm be used? Defaults to True. Hybrid reconstruction is faster but requires additional memory be allocated for a queue.}
+\item{bc}{numeric array or matrix, optional
+
+Boundary conditions for sink filling. `bc` should match the shape of the DEM.
+Values of 1 indicate pixels that should be fixed to their values in the
+original DEM and values of 0 indicate pixels that should be filled.}
+
+\item{hybrid}{logical, optional
+
+Should hybrid reconstruction algorithm be used to fill sinks? Defaults to
+True. Hybrid reconstruction is faster but requires additional memory be
+allocated for a queue.}
 }
 \value{
-SpatRaster (terra); The filled DEM
+GRIDobj
+
+The filled DEM
 }
 \description{
 Fill sinks in the digital elevation model (DEM).

@@ -2,7 +2,21 @@
 #'
 #' Compute downstream pixel indices from flow directions.
 #' 
-#' @param DEM (terra::SpatRaster) Digital elevation model
+#' @param DEM GRIDobj
+#' 
+#' Digital elevation model
+#' 
+#' @param bc numeric array or matrix, optional
+#' 
+#' Boundary conditions for sink filling. `bc` should match the shape of the DEM.
+#' Values of 1 indicate pixels that should be fixed to their values in the
+#' original DEM and values of 0 indicate pixels that should be filled.
+#' 
+#' @param hybrid logical, optional
+#' 
+#' Should hybrid reconstruction algorithm be used to fill sinks? Defaults to
+#' True. Hybrid reconstruction is faster but requires additional memory be
+#' allocated for a queue.
 #'
 #' @import terra
 #'
@@ -10,10 +24,12 @@
 #' 
 #' @export
 
-flow_routing_d8_edgelist <- function(DEM){
+flow_routing_d8_edgelist <- function(DEM,
+                                     bc=NULL,
+                                     hybrid=TRUE){
   
   # Compute inputs from raw DEM
-  SD <- flow_routing_d8_carve(DEM)
+  SD <- flow_routing_d8_carve(DEM, bc=bc, hybrid=hybrid)
   nodes <- get_grid_data(SD$source)
   directions <- get_grid_data(SD$direction)
   

@@ -2,8 +2,22 @@
 #'
 #' Compute the flow routing using the D8 algorithm with carving for flat areas.
 #' 
-#' @param DEM (terra::SpatRaster) Digital elevation model
-#'
+#' @param DEM GRIDobj
+#' 
+#' Digital elevation model
+#' 
+#' @param bc numeric array or matrix, optional
+#' 
+#' Boundary conditions for sink filling. `bc` should match the shape of the DEM.
+#' Values of 1 indicate pixels that should be fixed to their values in the
+#' original DEM and values of 0 indicate pixels that should be filled.
+#' 
+#' @param hybrid logical, optional
+#' 
+#' Should hybrid reconstruction algorithm be used to fill sinks? Defaults to
+#' True. Hybrid reconstruction is faster but requires additional memory be
+#' allocated for a queue.
+
 #' @import terra
 #'
 #' @return A list containing two terra::SpatRaster representing the source cells
@@ -11,10 +25,12 @@
 #' 
 #' @export
 
-flow_routing_d8_carve <- function(DEM){
+flow_routing_d8_carve <- function(DEM,
+                                  bc=NULL,
+                                  hybrid=TRUE){
   
   # Prepare inputs for flow routing based on raw DEM
-  DEMf <- fillsinks(DEM)
+  DEMf <- fillsinks(DEM, bc=bc, hybrid=hybrid)
   FLATS <- identifyflats(DEMf)
   DIST <- gwdt(DEM)
   
