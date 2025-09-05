@@ -5,7 +5,8 @@
 #include "topotoolbox.h"
 #include "topotoolboxr.h"
 
-void wrap_flow_routing_d8_edgelist(int *sourceR, // output
+void wrap_flow_routing_d8_edgelist(int *edge_countR,
+                                   int *sourceR, // output
                                    int *targetR, // output
                                    int *nodeR, // input
                                    int *directionR, // input
@@ -27,7 +28,8 @@ void wrap_flow_routing_d8_edgelist(int *sourceR, // output
   unsigned int order = 1;
   
   // Flow routing computation using libtopotoolbox
-  flow_routing_d8_edgelist(source, target, node, direction, dims, order);
+  int edge_count = (int)flow_routing_d8_edgelist(source, target, node, direction, dims, order);
+  *edge_countR = edge_count;
   
   // Write source and target into arrays passed back to R
   for (ptrdiff_t idx = 0; idx < dims[0] * dims[1]; idx++) {

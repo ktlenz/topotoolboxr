@@ -30,10 +30,19 @@ An object containing vectors of source and target pixels for each edge and
 an empty SpatRaster storing the spatial information of the original DEM.
 }
 \description{
-The constructor for the FlowObject. Takes a SpatRaster from terra as input,
-computes flow direction information and saves them as an FlowObject.
+The constructor for the FlowObject. Takes a GRIDobj from topotoolboxr or a 
+SpatRaster from terra as input, computes flow direction information and
+saves them as an FlowObject.
 }
 \details{
 Large intermediate arrays are created during the initialization process,
 which could lead to issues when using very large DEMs.
+}
+\examples{
+\dontrun{
+DEM <- terra::rast(system.file("ex/elev.tif",package="terra"))
+DEM <- terra::project(DEM,"EPSG:32632",res=90.0)
+FD <- FLOWobj(DEM)
+}
+
 }
