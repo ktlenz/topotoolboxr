@@ -19,6 +19,6 @@ void wrap_gwdt(float *distR, float *costsR, int *flatsR, int *dimsR);
 
 void wrap_flow_routing_d8_carve(int *sourceR, int *directionR, float *demR, float *distR, int *flatsR, int *dimsR);
 
-void wrap_flow_routing_d8_edgelist(int *sourceR, int *targetR, int *nodeR, int *directionR, int *dimsR);
+void wrap_flow_routing_d8_edgelist(int *edge_countR, int *sourceR, int *targetR, int *nodeR, int *directionR, int *dimsR);
 
 #endif // TOPOTOOLBOXR_H
