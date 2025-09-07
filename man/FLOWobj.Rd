@@ -9,7 +9,7 @@ FLOWobj(DEM, bc = NULL, hybrid = TRUE)
 \arguments{
 \item{DEM}{GRIDobj
 
-The GridObject that will be the basis of the computation.}
+The GRIDobj that will be the basis of the computation.}
 
 \item{bc}{numeric array or matrix, optional
 
@@ -30,9 +30,9 @@ An object containing vectors of source and target pixels for each edge and
 an empty SpatRaster storing the spatial information of the original DEM.
 }
 \description{
-The constructor for the FlowObject. Takes a GRIDobj from topotoolboxr or a 
-SpatRaster from terra as input, computes flow direction information and
-saves them as an FlowObject.
+`FLOWobj`is the constructor for the FLOWobj. It takes a GRIDobj from
+topotoolboxr or a SpatRaster from terra as input, computes flow direction
+information and saves them as an FLOWobj.
 }
 \details{
 Large intermediate arrays are created during the initialization process,

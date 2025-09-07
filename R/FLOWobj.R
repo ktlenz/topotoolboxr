@@ -1,13 +1,13 @@
 #' Create instance of a FLOWobj
 #' 
 #' @description
-#' The constructor for the FlowObject. Takes a GRIDobj from topotoolboxr or a 
-#' SpatRaster from terra as input, computes flow direction information and
-#' saves them as an FlowObject.
+#' `FLOWobj`is the constructor for the FLOWobj. It takes a GRIDobj from
+#' topotoolboxr or a SpatRaster from terra as input, computes flow direction
+#' information and saves them as an FLOWobj.
 #' 
 #' @param DEM GRIDobj
 #' 
-#' The GridObject that will be the basis of the computation.
+#' The GRIDobj that will be the basis of the computation.
 #' 
 #' @param bc numeric array or matrix, optional
 #' 
@@ -58,10 +58,11 @@ FLOWobj <- function(DEM,
   if (!is.null(bc)){ ## Check requirements for user boundary conditions
     if((is.matrix(bc)|is.array(bc))&!all(bc %in% c(0,1))) {
       # Check if bc is (matrix OR array) AND all values either 0 or 1
-      stop("`bc` must be either NULL, a matrix or an array containing 0s and 1s")
+      stop("bc must be either NULL, a matrix or an array containing 0s and 1s.")
     }
-    if(all(dem$dims != c(ncol(bc), nrow(bc)))){
-      stop("`DEM` and `bc` dimensions do not match")
+    if (!validatealignment(DEM, bc)) {
+      # Check if dimensions match
+      stop("DEM and bc do not align.")
     }
     bc <- t(bc)
   } else { # If the user does not provide bcs they are manually created
@@ -80,7 +81,7 @@ FLOWobj <- function(DEM,
   }
   ## Check requirements for hybrid (algorithm choice)
   if (!is.logical(hybrid)){
-    stop("`hybrid` has to be boolean")
+    stop("hybrid must be logical.")
   }
   
   ## Fillsink computation
@@ -177,4 +178,124 @@ FLOWobj <- function(DEM,
   # Assign class and return FLOWobj
   class(FD) <- "FLOWobj"
   return(FD)
+}
+
+#' FLOWobj dimensions
+#' 
+#' @description
+#' `get_dims.FLOWobj` computes the  dimensions of the underlying grid of the
+#' FLOWobj in the correct order for libtopotoolbox.
+#' 
+#' @param x FLOWobj
+#' 
+#' FLOWobj for which to copmute the dimensions
+#' 
+#' @return numeric vector
+#' 
+#' Dimensions of the grid
+#' 
+#' @export
+get_dims.FLOWobj <- function(x){
+  r <- x$raster
+  return(c(terra::ncol(r), terra::nrow(r)))
+}
+
+#' Unravel indices
+#' 
+#' @description
+#' `unravel_index.FLOWobj` unravels the provided linear indices so they can be
+#' used to index grids.
+#' 
+#' @param TTobj FLOWobj
+#' 
+#' FLOWobj for which to compute the grid indices
+#' 
+#' @param idxs vector or matrix or array
+#' 
+#' Flat indices to convert to grid indices
+#' 
+#' @return n x 2 matrix
+#' 
+#' Row indices and column indices of the provided flat indices
+#' 
+#' @export
+unravel_index.FLOWobj <- function(TTobj, idxs) {
+  # Input checks
+  if (!(is.vector(idxs) || is.matrix(idxs) || (is.array(idxs) && length(dim(idxs)) == 1))) {
+    stop("Input 'idxs' must be a one-dimensional vector, a matrix, or an array.")
+  }
+  dims <- get_dims(TTobj)
+  
+  # Calculate the strides for each dimension (row-major)
+  strides <- c(1, cumprod(dims[-length(dims)]))
+  
+  # Use outer division and modulo vectorized for each dimension
+  grid_indices <- sapply(rev(strides), function(s) {
+    grid_idx <- (idxs %/% s) %% dims[length(strides) - which(rev(strides) == s) + 1]
+  })
+  return(grid_indices)
+}
+
+#' Unravel source indices
+#' 
+#' @description
+#' `source_indices.FLOWobj` computes row and column indices of the sources of
+#' each edge in the flow network.
+#' 
+#' @param TTobj FLOWobj
+#' 
+#' FLOWobj for which to compute the grid indices of the source pixels
+#' 
+#' @return matrix
+#' 
+#' Row indices and column indices of the source pixels
+#' 
+#' @export
+source_indices.FLOWobj <- function(TTobj){
+  return(unravel_index(TTobj, TTobj$source))
+}
+
+#' Unravel target indices
+#' 
+#' @description
+#' ``target_indices.FLOWobj` computes row and column indices of the targets of
+#' each edge in the flow network.
+#' 
+#' @param TTobj FLOWobj
+#' 
+#' FLOWobj for which to compute the grid indices of the target pixels
+#' 
+#' @return n x 2 matrix
+#' 
+#' Row indices and column indices of the target pixels
+#' 
+#' @export
+target_indices.FLOWobj <- function(TTobj){
+  return(unravel_index(TTobj, TTobj$target))
+}
+
+#' FLOWobj node attribute list
+#' 
+#' @description
+#' Retrieve a node attribute list
+#' 
+#' @param TTobj FLOWobj
+#' The FLOWobj for which to retrieve the node attribute list
+#' 
+#' @param k GridObject or matrix or array or scalar
+#' 
+#' The object from which node values will be extracted. If
+#' `k` is a `GridObject` or an `ndarray` with the same shape
+#' as this `FlowObject`, then a copy is returned. If it is a
+#' scalar, an `ndarray` with the appropriate shape, filled
+#' with `k`, is returned.
+#' 
+#' @return GRIDobj or array
+#' 
+#' @export
+ezgetnal.FLOWobj <- function(TTobj, k) {
+  if (is.atomic(k) & length(k) == 1) {
+    return(array(k, dim = length(get_grid_data(TTobj$stream)$z)))
+  }
+  return(k)
 }
