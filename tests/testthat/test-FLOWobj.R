@@ -42,4 +42,16 @@ test_that("test-FLOWobj.R test the proper generation of a FLOWobj", {
   bc[,dim(bc)[2]] <- 1
   expect_no_error(FLOWobj(DEM, bc))
   expect_error(FLOWobj(DEM, t(bc)))
+  # Check outputs of helper functions
+  DEMm <- matrix(1:9, 3, 3)
+  DEMm[1,1] <- NA
+  DEMm[3,3] <- NA
+  DEM <- terra::rast(DEMm, crs="EPSG:25833")
+  FD <- FLOWobj(DEM)
+  expect_equal(source_indices(FD),
+               matrix(c(2,1,2,0,1,2,1,1,0,2,0,1),
+                      nrow=6, ncol=2, byrow=T))
+  expect_equal(target_indices(FD),
+               matrix(c(2,0,1,0,1,1,1,0,0,1,1,0),
+                      nrow=6, ncol=2, byrow=T))
 })
