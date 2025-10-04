@@ -21,4 +21,6 @@ void wrap_flow_routing_d8_carve(int *sourceR, int *directionR, float *demR, floa
 
 void wrap_flow_routing_d8_edgelist(int *edge_countR, int *sourceR, int *targetR, int *nodeR, int *directionR, int *dimsR);
 
+void wrap_flow_accumulation_edgelist(float *accR, int *sourceR, int *targetR, float *fractionR, float *weightR, int *edge_countR, int *dimsR);
+
 #endif // TOPOTOOLBOXR_H
