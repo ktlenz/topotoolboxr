@@ -1,13 +1,26 @@
-#' Generic function for computing dimensions
+#' Get cell values
 #' 
 #' @description
-#' `get_dims` computes the dimensions of an object in the correct order for
+#' `get_values` retrieves the cell values of a TopoToolbox object.
+#' 
+#' @param x TopoToolbox object
+#' @return numeric vector | logical vector
+#' 
+#' Cell values of the TopoToolbox object
+#' 
+#' @export
+get_values <- function(x) {
+  UseMethod("get_values")
+}
+
+
+#' Get the dimensions
+#' 
+#' @description
+#' `get_dims` retrieves the dimensions of an object in the correct order for
 #' libtopotoolbox.
 #' 
-#' @param x matrix or array or SpatRaster or GRIDobj or FLOWobj
-#' 
-#' Object for which to compute the dimensions
-#' 
+#' @param x matrix | array | SpatRaster | GRIDobj | FLOWobj
 #' @return numeric vector
 #' 
 #' Dimensions of the object
@@ -20,13 +33,10 @@ get_dims <- function(x) {
 #' Matrix dimensions
 #' 
 #' @description
-#' `get_dims.matrix` computes the dimensions of a matrix in the correct order
+#' `get_dims.matrix` retrieves the dimensions of a matrix in the correct order
 #' for libtopotoolbox.
 #' 
 #' @param x matrix
-#' 
-#' Matrix for which to compute dimensions
-#' 
 #' @return numeric vector
 #' 
 #' Dimensions of the matrix
@@ -39,13 +49,10 @@ get_dims.matrix <- function(x){
 #' Array dimensions
 #' 
 #' @description
-#' `get_dims.array` computes the dimensions of an array in the correct order for
+#' `get_dims.array` retrieves the dimensions of an array in the correct order for
 #' libtopotoolbox.
 #' 
 #' @param x array
-#' 
-#' Array for which to compute dimensions
-#' 
 #' @return numeric vector
 #' 
 #' Dimensions of the array
@@ -58,14 +65,11 @@ get_dims.array <- function(x){
 #' SpatRaster dimensions
 #' 
 #' @description
-#' `get_dims.SpatRaster` computes the dimensions of a SpatRaster in the correct
+#' `get_dims.SpatRaster` retrieves the dimensions of a SpatRaster in the correct
 #' order for libtopotoolbox.
 #' 
 #' @param x SpatRaster
-#' 
-#' SpatRaster for which to compute dimensions
-#' 
-#' @return numeric vector
+#' @return integer vector
 #' 
 #' Dimensions of the SpatRaster
 #' 
@@ -77,6 +81,36 @@ get_dims.array <- function(x){
 #' @export
 get_dims.SpatRaster <- function(x){
   return(c(terra::ncol(x), terra::nrow(x)))
+}
+
+#' Get the cellsize
+#' 
+#' @description
+#' `get_cellsize` retrieves the cellsize of a TopoToolbox object.
+#' 
+#' @param x GRIDobj or FLOWobj
+#' @return numeric scalar
+#' 
+#' Cellsize of the TopoToolbox object
+#' 
+#' @export
+get_cellsize <- function(x) {
+  UseMethod("get_cellsize")
+}
+
+#' Get the extent
+#' 
+#' @description
+#' `get_extent` retrieves the extent of a TopoToolbox object.
+#' 
+#' @param x GRIDobj or FLOWobj
+#' @return numeric vector
+#' 
+#' Extent of the TopoToolbox object
+#' 
+#' @export
+get_extent <- function(x) {
+  UseMethod("get_extent")
 }
 
 #' Generic function for unravel_index

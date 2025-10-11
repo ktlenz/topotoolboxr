@@ -2,14 +2,12 @@
 % Please edit documentation in R/generics.R
 \name{get_dims}
 \alias{get_dims}
-\title{Generic function for computing dimensions}
+\title{Get the dimensions}
 \usage{
 get_dims(x)
 }
 \arguments{
-\item{x}{matrix or array or SpatRaster or GRIDobj or FLOWobj
-
-Object for which to compute the dimensions}
+\item{x}{matrix | array | SpatRaster | GRIDobj | FLOWobj}
 }
 \value{
 numeric vector
@@ -17,6 +15,6 @@ numeric vector
 Dimensions of the object
 }
 \description{
-`get_dims` computes the dimensions of an object in the correct order for
+`get_dims` retrieves the dimensions of an object in the correct order for
 libtopotoolbox.
 }

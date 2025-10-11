@@ -7,9 +7,7 @@
 \method{get_dims}{matrix}(x)
 }
 \arguments{
-\item{x}{matrix
-
-Matrix for which to compute dimensions}
+\item{x}{matrix}
 }
 \value{
 numeric vector
@@ -17,6 +15,6 @@ numeric vector
 Dimensions of the matrix
 }
 \description{
-`get_dims.matrix` computes the dimensions of a matrix in the correct order
+`get_dims.matrix` retrieves the dimensions of a matrix in the correct order
 for libtopotoolbox.
 }
