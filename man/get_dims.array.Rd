@@ -7,9 +7,7 @@
 \method{get_dims}{array}(x)
 }
 \arguments{
-\item{x}{array
-
-Array for which to compute dimensions}
+\item{x}{array}
 }
 \value{
 numeric vector
@@ -17,6 +15,6 @@ numeric vector
 Dimensions of the array
 }
 \description{
-`get_dims.array` computes the dimensions of an array in the correct order for
+`get_dims.array` retrieves the dimensions of an array in the correct order for
 libtopotoolbox.
 }

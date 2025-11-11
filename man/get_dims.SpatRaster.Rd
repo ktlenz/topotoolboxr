@@ -7,17 +7,15 @@
 \method{get_dims}{SpatRaster}(x)
 }
 \arguments{
-\item{x}{SpatRaster
-
-SpatRaster for which to compute dimensions}
+\item{x}{SpatRaster}
 }
 \value{
-numeric vector
+integer vector
 
 Dimensions of the SpatRaster
 }
 \description{
-`get_dims.SpatRaster` computes the dimensions of a SpatRaster in the correct
+`get_dims.SpatRaster` retrieves the dimensions of a SpatRaster in the correct
 order for libtopotoolbox.
 }
 \note{
